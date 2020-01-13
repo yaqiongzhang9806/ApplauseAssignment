@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Search Criteria</h1>	
+	<div>
+	<span th:text="'You input Country List is: ' + ${searchCriteria.getInputCountryList()}"></span>
+	</div>
+	<div>
+	<span th:text="'You input Device List is: ' + ${searchCriteria.inputDeviceList}"></span>
+	</div>
+	<h1>Search Result</h1>
+	<table>
+    <thead>
+        <tr>
+            <th> FirstName </th>
+            <th> LastName </th>
+            <th> Experience </th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${output.empty}">
+            <td colspan="2"> No Testers Available </td>
+        </tr>
+        <tr th:each="out : ${output}">
+            <td><span th:text="${out.tester.firstName}"></span></td>
+            <td><span th:text="${out.tester.lastName}"></span></td>
+            <td><span th:text="${out.experience}"></span></td>
+        </tr>
+    </tbody>
+</table>
+    <a href="/">Another Search</a>
+</body>
+</html>

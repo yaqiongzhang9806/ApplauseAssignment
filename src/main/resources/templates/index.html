@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- META SECTION -->
+    <title>Applause Search</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- END META SECTION -->
+    <!--  BEGIN STYLE -->
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            padding: 1px;
+        }
+    </style>
+    <!--  END STYLE -->
+
+</head>
+<body>
+    <div>
+        <h1>Spring Boot Web Thymeleaf Application</h1>        
+            <h3>Available Countries:</h3>  
+				<ul>
+   					<li th:each="country: ${allCountry}">	
+						<span th:text="${country}"></span>  			
+    				</li>
+				</ul>
+			<h3>Available Devices:</h3>
+        		<ul>
+   					<li th:each="device: ${allDevice}">	
+						<span th:text="${device.descripton}"></span>  			
+    				</li>
+				</ul>
+    </div>  
+
+<h2>Search</h2>
+<p>Please input country and device as search criteria: </p>	
+<p>Note: You can input multiple counties separated with ",". If you want input all country, you can just input "ALL" in short.</p>
+<p>You can also input multiple devices separated with ",". If you want input all devices, you can just input "ALL" in short.</p>
+<p>Input country/device name should be exact same with the names shown in above two lists.</p>
+<p>Valid Country Input Example : </p>
+<ul><li>US,JP</li><li>ALL</li><li>JP,GB</li><li>GB</li></ul>
+<p>Valid Device Input Example : </p>
+<ul><li>iPhone 4,iPhone 4S</li><li>ALL</li><li>Galaxy S3,iPhone 4,iPhone 4S</li><li>HTC One</li></ul>
+
+<form action="#" th:action="@{/}" th:object="${searchCriteria}" method="post">	
+    <p>Country: <input type="text" th:field="*{inputCountryList}" /></p>
+    <p>Device: <input type="text" th:field="*{inputDeviceList}" size="85"/></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+
+</body>
+</html>
