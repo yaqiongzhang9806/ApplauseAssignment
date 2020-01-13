@@ -1,16 +1,21 @@
-package com.example.applause.dataProvider;
+package com.example.applause.dataprovider;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.example.applause.entity.Bug;
 import com.example.applause.entity.Device;
 import com.example.applause.entity.Tester;
 import com.example.applause.entity.Tester_Device;
 
+@Component
 public class DataProvider {
-	
-	private OpenCSVReader reader = new OpenCSVReader();
+	@Autowired
+	private OpenCSVReader reader;
 
 	public List<Tester> getAllTester(){	
 		String file = "testers.csv";		

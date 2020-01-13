@@ -1,0 +1,23 @@
+Note for input String:
+
+You can input multiple counties separated with ",". If you want input all country, you can just input "ALL" in short.
+
+You can also input multiple devices separated with ",". If you want input all devices, you can just input "ALL" in short.
+
+Input country/device name should be exact same with the names in provided available lists.
+
+Valid Country Input Example :
+
+US,JP
+ALL
+JP,GB
+GB
+
+Valid Device Input Example :
+
+iPhone 4,iPhone 4S
+ALL
+Galaxy S3,iPhone 4,iPhone 4S
+HTC One
+
+Since there is no form validation provided, wrong spell on country/device name will not give correct answer.

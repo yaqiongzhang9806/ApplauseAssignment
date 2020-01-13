@@ -14,13 +14,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.applause.entity.Device;
 import com.example.applause.entity.Output;
 import com.example.applause.entity.SearchCriteria;
-import com.example.applause.service.Service;
+import com.example.applause.service.SearchService;
 
 @Controller
 public class SearchController {
 
-//@Autowired
-private Service service = new Service();
+@Autowired
+private SearchService service;
 
 @GetMapping("/")
 public String main(Model model) {	
@@ -44,7 +44,7 @@ public String Submit(@ModelAttribute("searchCriteria") SearchCriteria searchCrit
 }
 
 @GetMapping("/result")
-public String fooresult(
+public String Result(
 		@ModelAttribute("searchCriteria") SearchCriteria searchCriteria,
 		Model model) {
 	List<Output> output = service.Search(searchCriteria);

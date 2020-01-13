@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.example.applause.dataProvider.DataProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.applause.dataprovider.DataProvider;
 import com.example.applause.entity.Bug;
 import com.example.applause.entity.Device;
 import com.example.applause.entity.Output;
@@ -17,8 +20,10 @@ import com.example.applause.entity.SearchCriteria;
 import com.example.applause.entity.Tester;
 import com.example.applause.entity.Tester_Device;
 
-public class Service {
-	private DataProvider dataProvider = new DataProvider();
+@Service
+public class SearchService {
+	@Autowired
+	private DataProvider dataProvider;
 	public List<String> getAllCountry(){
 		List<Tester> allTester = dataProvider.getAllTester();
 		Set<String> set = new HashSet<String>();
@@ -33,7 +38,7 @@ public class Service {
 		return dataProvider.getAllDevice();
 	}
 	
-	public List<String> getAllDeviceName(){		
+	private List<String> getAllDeviceName(){		
 		List<Device> allDevice = getAllDevice();
 		List<String> deviceNameList = new ArrayList<String>();
 		for(Device device : allDevice) {
@@ -42,7 +47,7 @@ public class Service {
 		return deviceNameList;
 	}
 	
-	public Map<Tester_Device, List<Integer>> getSearchMap(){
+	private Map<Tester_Device, List<Integer>> getSearchMap(){
 		List<Bug> allBug = dataProvider.getAllBug();		
 		Map<Tester_Device, List<Integer>> map = new HashMap<>();
 		for(Bug bug: allBug) {
@@ -57,7 +62,7 @@ public class Service {
 		return map;
 	}
 	
-	public List<Tester> getTesterByCountry(List<String> countryList){
+	private List<Tester> getTesterByCountry(List<String> countryList){
 		List<Tester> testerList = new ArrayList<>();
 		if(countryList == null || countryList.size() == 0) return testerList;
 		List<Tester> allTester = dataProvider.getAllTester();
@@ -70,7 +75,7 @@ public class Service {
 		return testerList;
 	}
 	
-	public List<Integer> getDeviceIdByDeviceName(List<String> deviceNameList){
+	private List<Integer> getDeviceIdByDeviceName(List<String> deviceNameList){
 		List<Integer> idList = new ArrayList<>();
 		if(deviceNameList == null || deviceNameList.size() == 0) return idList;
 		List<Device> allDevice = dataProvider.getAllDevice();
@@ -83,7 +88,7 @@ public class Service {
 		return idList;
 	}
 	
-	public List<Output> getSearchResult(List<Tester> testerList, List<Integer> deviceIdList){
+	private List<Output> getSearchResult(List<Tester> testerList, List<Integer> deviceIdList){
 		List<Output> result = new ArrayList<>();
 		if(testerList == null || testerList.size() == 0 || deviceIdList == null || deviceIdList.size() == 0) return result;
 		Map<Tester_Device, List<Integer>> map = getSearchMap();
@@ -102,7 +107,7 @@ public class Service {
 		return result;
 	}
 	
-	public List<Output> Search(List<String> countryList, List<String> deviceNameList){
+	private List<Output> Search(List<String> countryList, List<String> deviceNameList){
 		List<Output> result = new ArrayList<>();
 		if(countryList == null || countryList.size() == 0 || deviceNameList == null || deviceNameList.size() == 0) return result;
 		Set<String> setCountry = new HashSet<String>(countryList);
@@ -120,10 +125,11 @@ public class Service {
 	}
 	
 	public List<Output> Search(SearchCriteria searchCriteria){
+		if(searchCriteria == null) return new ArrayList<Output>();
 		String inputCountryList = searchCriteria.getInputCountryList();
-		String inputDeviceList = searchCriteria.getInputDeviceList();
-		List<String> countryList = Arrays.asList(inputCountryList.split("\\s*,\\s*"));
-		List<String> deviceList = Arrays.asList(inputDeviceList.split("\\s*,\\s*"));		
+		String inputDeviceList = searchCriteria.getInputDeviceList();		
+		List<String> countryList = inputCountryList == null? new ArrayList<String>() : Arrays.asList(inputCountryList.split("\\s*,\\s*"));
+		List<String> deviceList = inputDeviceList == null ? new ArrayList<String>() : Arrays.asList(inputDeviceList.split("\\s*,\\s*"));	
 		return Search(countryList, deviceList);		
 	}
 }
